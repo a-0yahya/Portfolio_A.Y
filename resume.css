@@ -1,0 +1,297 @@
+/* General body and font settings */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #1b1b3a;
+    color: #fff;
+    scroll-behavior: smooth;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: #161625;
+}
+
+header .logo {
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #e94560;
+}
+
+header .logo img.logo-image {
+    width: 70px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+header nav ul {
+    display: flex;
+    list-style: none;
+}
+
+header nav ul li {
+    margin: 0 15px;
+}
+
+header nav ul li a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.1rem;
+    transition: color 0.3s ease;
+}
+
+header nav ul li a:hover {
+    color: #e94560;
+}
+
+/* Resume Section */
+.resume-section {
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 20px;
+    color: #fff;
+    hr {
+        width: 120%;
+        margin-left: -140px;
+    }
+}
+
+.resume-section h1 {
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    text-align: left;
+    color: #e94560;
+    /* border-bottom: 2px solid #e94560; */
+    padding-bottom: 10px;
+}
+
+.resume-item {
+    margin-bottom: 40px;
+   
+ 
+}
+
+
+.resume-item h2 {
+    font-size: 2rem;
+    color: #fff;
+    margin-bottom: -30px;
+    text-align: left;
+}
+
+/* Flexbox alignment for titles and dates */
+
+/* Certification Section */
+.certifications-section {
+    margin-bottom: 50px;
+}
+
+.dh {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    margin-left: 750px; /* Adjust as needed based on layout */
+}
+
+.l {
+    margin-right: 10px;
+    color: #f25f4c;
+    font-weight: bold;
+    display: flex;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: -33px;
+    margin-left: -150px
+    
+}
+.m1{
+    font-weight: bold;
+}
+.m1 li{
+    font-weight: normal;
+}
+.l1{
+    margin-right: 10px;
+    color: #f25f4c;
+    font-weight: bold;
+    display: flex;
+    padding: 10px;
+    /* border-radius: 10px; */
+    margin-bottom: -33px;
+    margin-left: -220px
+}
+
+.dh .m {
+    margin-right: 20px;
+    font-weight: bold;
+    
+}
+
+.par {
+    font-size: 1rem;
+    color: #fff;
+    margin-bottom: 20px;
+    margin-left: 830px;
+    line-height: 1.5rem;
+}
+
+.par ul {
+    list-style: disc;
+    line-height: 1.5rem;
+}
+
+.par ul li {
+    margin-bottom: 10px;
+    color: white;
+}
+
+
+
+
+
+/* Skills Section */
+.skills-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 20px;
+}
+
+.skills-section {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    /* margin-right: 0px; */
+    align-items: end;
+}
+.Tools{
+    margin-right: 44px;
+}
+
+.test{
+    display: flex;
+    flex-direction: row;
+}
+
+
+.skills-section h3 {
+    font-size: 1.5rem;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.skills-logos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.skills-logos img {
+    width: 200px;
+    height: auto;
+    margin-top: 30px;
+}
+
+
+
+/* Footer styles */
+footer {
+    background-color: #161625;
+    padding: 15px;
+    color: #fff;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-left,
+.footer-center,
+.footer-right {
+    flex: 1;
+    text-align: center;
+}
+
+.footer-left {
+    text-align: left;
+}
+
+.footer-right {
+    text-align: right;
+}
+
+.footer-center p {
+    margin-bottom: 7px; /* Adds some space between the "Follow Me" text and the icons */
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.social-links a {
+    margin: 0 10px;
+}
+
+.social-links img.social-icon {
+    width: 34px;
+    height: auto;
+    transition: transform 0.3s ease;
+}
+
+.social-links a:hover img.social-icon {
+    transform: scale(1.1);
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .resume-details {
+        flex-direction: column; /* Stack content vertically on smaller screens */
+    }
+
+    .skills-container {
+        flex-direction: column;
+    }
+}
+
+
+
+
+/* Skills logos */
+
+
+.skills-section:last-child {
+    margin-right: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .skills-container {
+        flex-direction: column;
+    }
+
+    .skills-section {
+        
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+
+    .skills-logos img {
+        width: 40px;
+    }
+}
