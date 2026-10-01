@@ -4469,3 +4469,57 @@ Layout and motion refinement — Impeccable
     display: none;
   }
 }
+
+@media screen and (max-width: 767px) {
+  .st-main-header-right {
+    position: fixed !important;
+    top: 12px;
+    right: max(15px, env(safe-area-inset-right));
+    z-index: 2000;
+  }
+
+  .st-nav .st-nav-list {
+    position: fixed;
+    top: 80px;
+    right: 0;
+    left: 0;
+    width: 100dvw;
+    max-height: calc(100dvh - 80px);
+    padding: 12px 0 18px;
+  }
+
+  .st-nav .st-nav-list a {
+    min-height: 46px;
+    padding: 12px 24px;
+  }
+
+  .st-hero.st-style2 .container {
+    width: calc(100dvw - 30px) !important;
+    max-width: calc(100dvw - 30px) !important;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  .st-hero-layout,
+  .st-hero-text {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .st-hero-portrait {
+    align-self: flex-start;
+    width: 180px !important;
+    max-width: 180px !important;
+  }
+
+  .st-hero.st-style2 .st-hero-summary {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .st-hero-actions,
+  .st-hero-social-links {
+    max-width: 100%;
+  }
+}
