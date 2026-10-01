@@ -43,6 +43,7 @@
   $(document).on("ready", function () {
     $(window).trigger("resize");
     dynamicBackground();
+    motionSystem();
     formValidation();
     progressBarInit();
     stickyHeader();
@@ -88,10 +89,24 @@
     3. Menu
   --------------------------------------------------------------*/
   function mainMenu() {
-    $('.st-nav').append('<span class="st-munu-toggle"><span></span></span>');
+    $('.st-nav').append('<button class="st-munu-toggle" type="button" aria-expanded="false" aria-label="Open navigation"><span></span></button>');
     $('.menu-item-has-children').append('<span class="st-munu-dropdown-toggle"></span>');
     $('.st-munu-toggle').on('click', function () {
-      $(this).toggleClass("st-toggle-active").siblings('.st-nav-list').slideToggle();;
+      var $toggle = $(this);
+      var isOpen = !$toggle.hasClass('st-toggle-active');
+      $toggle.toggleClass('st-toggle-active');
+      $toggle.attr('aria-expanded', isOpen ? 'true' : 'false');
+      $toggle.attr('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
+      $toggle.siblings('.st-nav-list').slideToggle();
+    });
+    $('.st-nav-list a').on('click', function () {
+      if ($(window).width() < 992) {
+        $('.st-munu-toggle').removeClass('st-toggle-active').attr({
+          'aria-expanded': 'false',
+          'aria-label': 'Open navigation'
+        });
+        $('.st-nav-list').slideUp();
+      }
     });
     $('.st-munu-dropdown-toggle').on('click', function () {
       $(this).toggleClass('active').siblings('ul').slideToggle();
@@ -119,9 +134,10 @@
       var thisAttr = $(this).attr('href');
       if ($(thisAttr).length) {
         var scrollPoint = $(thisAttr).offset().top - 10;
+        var scrollDuration = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 800;
         $('body,html').animate({
           scrollTop: scrollPoint
-        }, 800);
+        }, scrollDuration);
       }
       return false;
     });
@@ -192,7 +208,7 @@
     7. Ajax Contact Form And Appointment
   --------------------------------------------------------------*/
   // Contact Form
-  function formValidation() {
+  function legacyFormValidation() {
     if ($.exists('#contact-form #submit')) {
       $('#st-alert').hide();
       $('#contact-form #submit').on('click', function () {
@@ -245,6 +261,102 @@
     }
   }
 
+
+  function formValidation() {
+    var form = document.getElementById('contact-form');
+    if (!form) {
+      return;
+    }
+
+    var submit = document.getElementById('submit');
+    var status = document.getElementById('message-status');
+    var submitLabel = submit.querySelector('.st-submit-label');
+    var loadingLabel = submit.querySelector('.st-submit-loading');
+
+    if (window.emailjs) {
+      window.emailjs.init('2dLZWl_OcTI072PQ7');
+    }
+
+    function setStatus(message, type) {
+      status.textContent = message;
+      status.className = 'st-form-status' + (type ? ' is-' + type : '');
+    }
+
+    function setLoading(isLoading) {
+      submit.disabled = isLoading;
+      submit.setAttribute('aria-busy', isLoading ? 'true' : 'false');
+      submitLabel.hidden = isLoading;
+      loadingLabel.hidden = !isLoading;
+    }
+
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+      setStatus('', '');
+
+      Array.prototype.forEach.call(form.elements, function (field) {
+        if (field.removeAttribute) {
+          field.removeAttribute('aria-invalid');
+        }
+      });
+
+      if (!form.checkValidity()) {
+        Array.prototype.forEach.call(form.querySelectorAll(':invalid'), function (field) {
+          field.setAttribute('aria-invalid', 'true');
+        });
+        setStatus('Please complete every field with a valid email address.', 'error');
+        form.querySelector(':invalid').focus();
+        return;
+      }
+
+      if (!window.emailjs) {
+        setStatus('The message service could not load. Please email abdullahalsbahi2002@gmail.com directly.', 'error');
+        return;
+      }
+
+      setLoading(true);
+      window.emailjs.sendForm('service_9tdiijm', 'template_v8kvhtt', form)
+        .then(function () {
+          form.reset();
+          setStatus('Message sent successfully. I will get back to you soon.', 'success');
+        })
+        .catch(function () {
+          setStatus('The message could not be sent. Please try again or email me directly.', 'error');
+        })
+        .then(function () {
+          setLoading(false);
+        });
+    });
+  }
+
+  /*--------------------------------------------------------------
+    Portfolio motion system
+  --------------------------------------------------------------*/
+  function motionSystem() {
+    var root = document.documentElement;
+    var ticking = false;
+
+    window.requestAnimationFrame(function () {
+      document.body.classList.add('is-ready');
+    });
+
+    function updateProgress() {
+      var scrollable = root.scrollHeight - window.innerHeight;
+      var progress = scrollable > 0 ? Math.min(window.scrollY / scrollable, 1) : 0;
+      root.style.setProperty('--scroll-progress', progress.toFixed(4));
+      ticking = false;
+    }
+
+    function requestProgressUpdate() {
+      if (!ticking) {
+        window.requestAnimationFrame(updateProgress);
+        ticking = true;
+      }
+    }
+
+    updateProgress();
+    window.addEventListener('scroll', requestProgressUpdate, { passive: true });
+    window.addEventListener('resize', requestProgressUpdate);
+  }
 
   /*--------------------------------------------------------------
     8. Light Gallery
